@@ -160,6 +160,7 @@ export default function LoginPage() {
                 </IconButton>
                 {` `}
                 <h3 className={classes.socialTitle}>or be classical</h3>
+                <div>
                 <TextField
                   className={classes.pos}
                   id="outlined-first-name-text"
@@ -173,6 +174,8 @@ export default function LoginPage() {
                     ),
                   }}
                 />
+                </div>
+                <div>
                 <TextField
                   className={classes.pos}
                   id="outlined-first-name-text"
@@ -186,6 +189,8 @@ export default function LoginPage() {
                     ),
                   }}
                 />
+                </div>
+                <div>
                 <TextField
                   className={classes.pos}
                   id="outlined-email-text"
@@ -213,6 +218,7 @@ export default function LoginPage() {
                     ),
                   }}
                 />
+                </div>
                 <div>
                   <Button variant="contained" color="primary">
                     Get started
