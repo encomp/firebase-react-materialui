@@ -7,8 +7,6 @@ import Auth from './layouts/Auth';
 import theme from './theme';
 import * as firebase from 'firebase';
 
-
-
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
