@@ -16,6 +16,8 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import TextField from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -123,6 +125,25 @@ export default function LoginPage() {
     event.preventDefault();
   };
 
+  const handleGoogleLogin = (event) => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      var token = result.credential.accessToken;
+      var user = result.user;
+      
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      console.log(error);
+    });
+  }
+
   return (
     <Grid container justify="center" className={classes.root}>
       <Grid item xs={12} sm={12} md={10}>
@@ -143,7 +164,7 @@ export default function LoginPage() {
                   <GithubIcon />
                 </IconButton>
                 {` `}
-                <IconButton justIcon round>
+                <IconButton justIcon round onClick={handleGoogleLogin} >
                   <GoogleIcon />
                 </IconButton>
                 {` `}
