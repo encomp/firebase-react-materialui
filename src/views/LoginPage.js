@@ -199,8 +199,8 @@ export default function LoginPage() {
                 <div>
                 <TextField
                   className={classes.pos}
-                  id="outlined-first-name-text"
-                  label="Name"
+                  id="outlined-email-text"
+                  label="Email"
                   variant="outlined"
                   InputProps={{
                     startAdornment: (
@@ -214,8 +214,8 @@ export default function LoginPage() {
                 <div>
                 <TextField
                   className={classes.pos}
-                  id="outlined-email-text"
-                  label="Email"
+                  id="outlined-password-text"
+                  label="Password"
                   variant="outlined"
                   type={values.showPassword ? 'text' : 'password'}
                   value={values.password}
