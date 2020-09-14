@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { auth } from "./services/firebase";
 import Auth from "./layouts/Auth";
+import Home from "./layouts/Home";
 
 function PrivateRoute({ component: Component, authenticated, ...rest }) {
   return (
@@ -69,7 +70,12 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Auth />
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Auth} />
+        </Switch>
+      </Router>
     );
   }
 }
