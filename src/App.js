@@ -1,33 +1,75 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
-import ProTip from './ProTip';
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect
+} from "react-router-dom";
+import { auth } from "./services/firebase";
+import Auth from "./layouts/Auth";
 
-function Copyright() {
+function PrivateRoute({ component: Component, authenticated, ...rest }) {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+    <Route
+      {...rest}
+      render={props =>
+        authenticated === true ? (
+          <Component {...props} />
+        ) : (
+            <Redirect
+              to={{ pathname: "/login", state: { from: props.location } }}
+            />
+          )
+      }
+    />
   );
 }
 
-export default function App() {
+function PublicRoute({ component: Component, authenticated, ...rest }) {
   return (
-    <Container maxWidth="sm">
-      <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Create React App v4-beta example
-        </Typography>
-        <ProTip />
-        <Copyright />
-      </Box>
-    </Container>
+    <Route
+      {...rest}
+      render={props =>
+        authenticated === false ? (
+          <Component {...props} />
+        ) : (
+            <Redirect to="/" />
+          )
+      }
+    />
   );
+}
+
+export default class App extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      authenticated: false,
+      loading: true
+    };
+  }
+
+  componentDidMount() {
+    auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          authenticated: true,
+          loading: false
+        });
+        console.log(user);
+      } else {
+        this.setState({
+          authenticated: false,
+          loading: false
+        });
+      }
+    });
+  }
+
+  render() {
+    return (
+      <Auth />
+    );
+  }
 }
