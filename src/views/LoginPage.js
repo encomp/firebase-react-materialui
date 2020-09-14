@@ -16,8 +16,7 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import TextField from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import { analytics, auth } from "./../services/firebase";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -126,12 +125,12 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = (event) => {
-    var provider = new firebase.auth.GoogleAuthProvider();
+    var provider = new auth.GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-    firebase.auth().signInWithPopup(provider).then(function(result) {
+    auth().signInWithPopup(provider).then(function(result) {
       var token = result.credential.accessToken;
       var user = result.user;
-      
+      console.log(result);
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
